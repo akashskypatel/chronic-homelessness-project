@@ -1,0 +1,66 @@
+<form class="form-content">
+<mat-card>
+  <mat-card-title>Update Agency Information</mat-card-title>
+  <h2>General Information:</h2>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Angency Name</mat-label>
+      <input matInput value="Salvation Army">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput value="400 W. Colonial Drive, Orlando, FL 32804">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Phone</mat-label>
+      <input matInput value="407.423.8581">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Website</mat-label>
+      <input matInput value="https://salvationarmyflorida.org/orlando#assistance">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Public Email</mat-label>
+      <input matInput value="robin.smith@uss.salvationarmy.org">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Contact Email</mat-label>
+      <input matInput value="robin.smith@uss.salvationarmy.org">
+    </mat-form-field>
+    <h2>Hours:</h2>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Sunday</mat-label>
+      <input matInput value="Closed">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Monday</mat-label>
+      <input matInput value="8:00AM - 5:00PM">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Tuesday</mat-label>
+      <input matInput value="8:00AM - 5:00PM">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Wednesday</mat-label>
+      <input matInput value="8:00AM - 5:00PM">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Thursday</mat-label>
+      <input matInput value="8:00AM - 5:00PM">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Friday</mat-label>
+      <input matInput value="8:00AM - 5:00PM">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Satusday</mat-label>
+      <input matInput value="8:00AM - 5:00PM">
+    </mat-form-field>
+</mat-card>
+<br>
+<mat-card>
+  <mat-card-title>Services Provided</mat-card-title>
+  <section class="checkbox-section">
+    <div *ngFor="let service of services"><mat-checkbox>{{ service }}</mat-checkbox></div>
+  </section>
+</mat-card>
+</form>
