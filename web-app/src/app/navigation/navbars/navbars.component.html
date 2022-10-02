@@ -8,20 +8,14 @@
                          [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav class="sidenav" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-      <!--<mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
-      </mat-nav-list>-->
       <mat-nav-list>
         <button mat-list-item routerLink="/agency/add">
-          <!--<mat-icon class="material-symbols-outlined icon-text-button">account_tree</mat-icon>-->
           <span>Agency Form</span>
         </button>
         <button mat-list-item routerLink="/agency/list">
-          <!--<mat-icon class="material-symbols-outlined icon-text-button">account_tree</mat-icon>-->
           <span>Agency List</span>
         </button>
         <button mat-list-item routerLink="/guide">
-          <!--<mat-icon class="material-symbols-outlined icon-text-button">assignment</mat-icon>-->
           <span>Resource Guide</span>
         </button>
       </mat-nav-list>
