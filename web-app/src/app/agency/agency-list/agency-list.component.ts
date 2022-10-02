@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { Agency, AgencyList } from 'src/data/agency';
+import { AgencyList } from 'src/data/agency';
+import { Agency } from 'src/data/models';
 
 @Component({
   selector: 'app-agency-list',

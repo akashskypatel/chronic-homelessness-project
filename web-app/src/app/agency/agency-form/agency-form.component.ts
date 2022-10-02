@@ -1,4 +1,5 @@
-import { ServiceCategory, ServiceList } from './../../../data/service';
+import { ServiceList } from './../../../data/service';
+import { ServiceCategory } from 'src/data/models';
 import { Component, OnInit, ViewChildren, QueryList, Input } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ServicesFormComponent } from './services-form/services-form.component';

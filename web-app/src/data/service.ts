@@ -1,8 +1,4 @@
-
-export interface ServiceCategory {
-  id: string,
-  name: string
-}
+import { ServiceCategory } from "./models";
 
 export const ServiceList: Array<ServiceCategory> = [
   {
