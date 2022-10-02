@@ -1,7 +1,7 @@
 import {MediaMatcher} from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 
-/** @title Chronic Homelessness App */
+/** @title Orlando Service Guide */
 @Component({
   selector: 'app-navbars',
   templateUrl: './navbars.component.html',
@@ -9,7 +9,7 @@ import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 })
 export class NavbarsComponent implements OnDestroy {
 
-  title = 'Chronic Homelessness App';
+  title = 'Orlando Service Guide';
 
   mobileQuery: MediaQueryList;
 

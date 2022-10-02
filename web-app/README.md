@@ -28,7 +28,7 @@ ng serve -o
 ```
 7. To terminate the dev server in VS Code press Ctrl+C (both mac and pc) in the terminal/concole. If you are using another IDE check your IDE's console interrupt shortcut.
 
-# Other Angular commands for refernce
+# Other Angular commands for reference
 
 ## Development server
 

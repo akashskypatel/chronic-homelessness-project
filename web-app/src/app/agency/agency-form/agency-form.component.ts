@@ -1,6 +1,7 @@
-import { AgencyServices } from './../../../data/service';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { ServiceCategory, ServiceList } from './../../../data/service';
+import { Component, OnInit, ViewChildren, QueryList, Input } from '@angular/core';
+import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
+import { ServicesFormComponent } from './services-form/services-form.component';
 
 @Component({
   selector: 'app-agency-form',
@@ -8,27 +9,34 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./agency-form.component.scss']
 })
 export class AgencyFormComponent implements OnInit {
-  public services: string[] = [
-    'Drop-in Center',
-    'Employment',
-    'Family Housing Help',
-    'Low-income Housing Help',
-    'Food',
-    'Health/Medical/Dental',
-    'Government Application Assistance',
-    'LGBTQ+ Specific Services',
-    'Pregnancy Related Services',
-    'Shelter (Men)',
-    'Shelter (Women/Children)',
-    'Showers/Hygiene',
-    'Support Group',
-    'Veteran Services',
-    'Youth Services',
-    'Senior (60+) Services'
-  ];
+  @ViewChildren(ServicesFormComponent) private serviceCards: QueryList<ServicesFormComponent>;
+  @Input() parentForm: FormGroup = new FormGroup({
+    id: new FormControl(),
+    name: new FormControl(),
+    address: new FormControl(),
+    contactPhone: new FormControl(),
+    website: new FormControl(),
+    publicContactEmail: new FormControl(),
+    cityContactEmail: new FormControl(),
+    hours: new FormControl(),
+    services: new FormArray([]),
+    servicesInfo: new FormArray([])
+  });
+  public services: Array<ServiceCategory> = ServiceList;
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
   }
 
+  serviceToggle(event: any) {
+    console.log(event.source);
+    this.serviceCards.forEach(element => {
+      if (element.cardId == event.source.value) {
+        element.showCard = event.source.checked;
+      }
+    });
+  }
+  saveData(data: any) {
+    console.log(data);
+  }
 }

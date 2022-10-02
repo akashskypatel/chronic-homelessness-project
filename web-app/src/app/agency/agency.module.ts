@@ -6,12 +6,14 @@ import { AgencyFormComponent } from './agency-form/agency-form.component';
 import { AgencyListComponent } from './agency-list/agency-list.component';
 import { ServicesFormComponent } from './agency-form/services-form/services-form.component';
 import { MaterialModule } from '../../material.module';
+import { HoursFormComponent } from './agency-form/hours-form/hours-form.component';
 
 @NgModule({
   declarations: [
     AgencyFormComponent,
     AgencyListComponent,
-    ServicesFormComponent
+    ServicesFormComponent,
+    HoursFormComponent
   ],
   imports: [
     CommonModule,
