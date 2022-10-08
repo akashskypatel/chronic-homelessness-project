@@ -1,0 +1,44 @@
+<form class="form-content">
+<mat-card class="form-card">
+  <p>
+  <button type="button" mat-raised-button class="form-button" color="primary" (click)="saveData($event)">
+    <mat-icon class="material-symbols-outlined icon-text-button">save</mat-icon>
+    <span>SAVE</span>
+  </button>
+  </p>
+  <mat-card-title class="form-h2">Update Agency Information</mat-card-title>
+  <h2>General Information:</h2>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Agency Name</mat-label>
+      <input matInput formControlName="id"><!-- value="Salvation Army"-->
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address"><!--  value="400 W. Colonial Drive, Orlando, FL 32804"-->
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="contactPhone"><!--  value="407.423.8581"-->
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Website</mat-label>
+      <input matInput formControlName="website"><!--  value="https://salvationarmyflorida.org/orlando#assistance"-->
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Public Contact Email</mat-label>
+      <input matInput formControlName="publicContactEmail"><!--  value="robin.smith@uss.salvationarmy.org"-->
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>City Contact Email</mat-label>
+      <input matInput formControlName="cityContactEmail"><!--  value="robin.smith@uss.salvationarmy.org"-->
+    </mat-form-field>
+    <app-hours-form></app-hours-form>
+</mat-card>
+<mat-card class="form-card">
+  <mat-card-title>Services Provided</mat-card-title>
+  <section class="checkbox-section">
+    <div *ngFor="let service of services"><mat-checkbox [value]='service.id' (change)="serviceToggle($event)">{{ service.name }}</mat-checkbox></div>
+  </section>
+</mat-card>
+<app-services-form *ngFor="let service of services" [serviceTitle]='service.name' [cardId]='service.id' [id]='service.id'></app-services-form>
+</form>

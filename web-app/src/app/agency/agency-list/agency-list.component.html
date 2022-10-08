@@ -1,0 +1,55 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-list">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Phone Column -->
+  <ng-container matColumnDef="contactPhone">
+    <th mat-header-cell *matHeaderCellDef> Phone </th>
+    <td mat-cell *matCellDef="let element"> {{element.contactPhone}} </td>
+  </ng-container>
+
+  <!-- City Contact Email Column -->
+  <ng-container matColumnDef="cityContactEmail">
+    <th mat-header-cell *matHeaderCellDef> City Contact Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.cityContactEmail}} </td>
+  </ng-container>
+
+  <!-- Date Updated Column -->
+  <ng-container matColumnDef="dateUpdated">
+    <th mat-header-cell *matHeaderCellDef> Date Updated </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateUpdated}} </td>
+  </ng-container>
+
+  <!-- Date Emailed Column -->
+  <ng-container matColumnDef="dateLastEmailed">
+    <th mat-header-cell *matHeaderCellDef> Date Emailed </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateLastEmailed}} </td>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button type="button" mat-raised-button class="action-button" color="primary" routerLink="/agency/add">
+        <mat-icon class="material-symbols-outlined icon-text-button">edit</mat-icon>
+      </button>
+      <button type="button" mat-raised-button class="action-button" color="primary">
+        <mat-icon class="material-symbols-outlined icon-text-button">mail</mat-icon>
+      </button>
+      <button type="button" mat-raised-button class="action-button" color="primary">
+        <mat-icon class="material-symbols-outlined icon-text-button">delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+

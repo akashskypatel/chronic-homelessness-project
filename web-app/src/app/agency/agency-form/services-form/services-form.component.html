@@ -1,0 +1,11 @@
+<mat-card class="form-card" *ngIf='showCard'>
+  <mat-card-title>{{ serviceTitle }}</mat-card-title>
+  <mat-slide-toggle (click)="toggleHours($event)">Service has specific hours that are different than general agency hours</mat-slide-toggle>
+  <br *ngIf='!showHours'>
+  <br *ngIf='!showHours'>
+  <app-hours-form *ngIf='showHours'></app-hours-form>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+</mat-card>
