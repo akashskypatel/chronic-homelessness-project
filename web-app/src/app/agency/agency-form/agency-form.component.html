@@ -1,4 +1,4 @@
-<form class="form-content">
+<form class="form-content" [formGroup]="parentForm">
 <mat-card class="form-card">
   <p>
   <button type="button" mat-raised-button class="form-button" color="primary" (click)="saveData($event)">
@@ -8,9 +8,13 @@
   </p>
   <mat-card-title class="form-h2">Update Agency Information</mat-card-title>
   <h2>General Information:</h2>
+  <mat-form-field class="full-width" appearance="fill">
+    <mat-label>Id</mat-label>
+    <input matInput formControlName="id" [readonly]='true'><!-- value="Salvation Army"-->
+  </mat-form-field>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Agency Name</mat-label>
-      <input matInput formControlName="id"><!-- value="Salvation Army"-->
+      <input matInput formControlName="name"><!-- value="Salvation Army"-->
     </mat-form-field>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Address</mat-label>
@@ -32,13 +36,20 @@
       <mat-label>City Contact Email</mat-label>
       <input matInput formControlName="cityContactEmail"><!--  value="robin.smith@uss.salvationarmy.org"-->
     </mat-form-field>
-    <app-hours-form></app-hours-form>
+    <app-hours-form [hoursForm]="hours"></app-hours-form>
 </mat-card>
 <mat-card class="form-card">
   <mat-card-title>Services Provided</mat-card-title>
   <section class="checkbox-section">
-    <div *ngFor="let service of services"><mat-checkbox [value]='service.id' (change)="serviceToggle($event)">{{ service.name }}</mat-checkbox></div>
+    <div *ngFor="let service of servicesFormArray.controls; let i = index" formArrayName="services"><mat-checkbox [value]='serviceList[i].id' (change)="serviceToggle($event)" [formControlName]="serviceList[i].id">{{ serviceList[i].name }}</mat-checkbox></div>
   </section>
 </mat-card>
-<app-services-form *ngFor="let service of services" [serviceTitle]='service.name' [cardId]='service.id' [id]='service.id'></app-services-form>
+<div *ngFor="let service of servicesFormArray.controls; let i = index" class="service-form-array" formArrayName="servicesInfo">
+  <app-services-form
+  [serviceTitle]='serviceList[i].name'
+  [cardId]='serviceList[i].id'
+  [id]='serviceList[i].id'
+  [formGroupName]="serviceList[i].id"
+  [serviceForm]="getServiceForm(serviceList[i].id)"
+  [hours]="getServiceHourForm(serviceList[i].id)"></app-services-form></div>
 </form>

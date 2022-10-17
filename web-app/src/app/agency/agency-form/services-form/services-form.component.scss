@@ -6,3 +6,10 @@
   max-width: 95%;
   margin: 2em auto;
 }
+
+.invisible{
+  display: block;
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}

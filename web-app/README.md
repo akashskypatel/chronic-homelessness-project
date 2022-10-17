@@ -14,13 +14,14 @@ Front end web application that allows users to enter and maintain local agency i
 
 5. Run the following commands 
 
-Install angular cli globally
+Install angular cli and yarn globally
 ```
 npm install -g @angular/cli
+npm install -g yarn
 ```
 Install all project dependencies
 ```
-npm install
+yarn install
 ```
 6. You should now be able to run the development server with the following command. This will open the web application in your default browser. Alternatively you can navigate to the application by opening `http://localhost:4200/` in your browser after running below command.
 ```

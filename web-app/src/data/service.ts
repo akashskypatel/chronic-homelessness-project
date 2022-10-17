@@ -2,71 +2,71 @@ import { ServiceCategory } from "./models";
 
 export const ServiceList: Array<ServiceCategory> = [
   {
-    id: "SERVICE1",
+    id: "0",
     name: 'Drop-in Center'
   },
   {
-    id: "SERVICE2",
+    id: "1",
     name: 'Employment',
   },
   {
-    id: "SERVICE3",
+    id: "2",
     name: 'Family Housing Help',
   },
   {
-    id: "SERVICE4",
+    id: "3",
     name: 'Low-income Housing Help',
   },
   {
-    id: "SERVICE5",
+    id: "4",
     name: 'Food (Meals)',
   },
   {
-    id: "SERVICE6",
+    id: "5",
     name: 'Food (Pantry)',
   },
   {
-    id: "SERVICE7",
+    id: "6",
     name: 'Health/Medical/Dental',
   },
   {
-    id: "SERVICE8",
+    id: "7",
     name: 'Government Application Assistance',
   },
   {
-    id: "SERVICE9",
+    id: "8",
     name: 'LGBTQ+ Specific Services',
   },
   {
-    id: "SERVICE10",
+    id: "9",
     name: 'Pregnancy Related Services',
   },
   {
-    id: "SERVICE11",
+    id: "10",
     name: 'Shelter (Men)',
   },
   {
-    id: "SERVICE12",
+    id: "11",
     name: 'Shelter (Women/Children)',
   },
   {
-    id: "SERVICE13",
+    id: "12",
     name: 'Showers/Hygiene',
   },
   {
-    id: "SERVICE14",
+    id: "13",
     name: 'Support Group',
   },
   {
-    id: "SERVICE15",
+    id: "14",
     name: 'Veteran Services',
   },
   {
-    id: "SERVICE16",
+    id: "15",
     name: 'Youth Services',
   },
   {
-    id: "SERVICE17",
+    id: "16",
     name: 'Senior (60+) Services'
   }
 ];

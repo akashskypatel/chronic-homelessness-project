@@ -7,7 +7,9 @@ import { AgencyListComponent } from './agency-list/agency-list.component';
 import { ServicesFormComponent } from './agency-form/services-form/services-form.component';
 import { MaterialModule } from '../../material.module';
 import { HoursFormComponent } from './agency-form/hours-form/hours-form.component';
-
+import { DataService } from '../data.service';
+import { UtilitiesService } from '../utilities.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AgencyFormComponent,
@@ -18,7 +20,13 @@ import { HoursFormComponent } from './agency-form/hours-form/hours-form.componen
   imports: [
     CommonModule,
     AgencyRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [
+    DataService,
+    UtilitiesService
   ]
 })
 export class AgencyModule { }
