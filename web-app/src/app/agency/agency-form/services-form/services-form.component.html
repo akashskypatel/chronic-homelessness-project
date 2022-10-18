@@ -9,13 +9,15 @@
       </mat-form-field>
       <mat-form-field class="full-width invisible" appearance="fill">
         <mat-label>Service</mat-label>
-        <input matInput formControlName="service" [value]="serviceTitle" [readonly]='true'><!--  value="8:00AM - 5:00PM"-->
+        <input matInput formControlName="service" [value]="serviceTitle" [readonly]='true'>
+        <!--  value="8:00AM - 5:00PM"-->
       </mat-form-field>
       <mat-slide-toggle (click)="toggleHours($event)" formControlName="differentHours">Service has specific hours that
         are different than general agency hours</mat-slide-toggle>
-      <br *ngIf='!showHours'>
-      <br *ngIf='!showHours'>
-      <app-hours-form *ngIf='showHours' [hoursForm]="hours"></app-hours-form>
+      <div *ngIf='!this.differentHoursValue'>
+        <br>
+      </div>
+      <app-hours-form *ngIf='this.differentHoursValue' [hoursForm]="hours"></app-hours-form>
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description" formControlName="description"></textarea>

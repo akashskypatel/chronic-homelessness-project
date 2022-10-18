@@ -1,10 +1,12 @@
+import { AgencyList } from './../../../data/agency';
 import { UtilitiesService } from './../../utilities.service';
 import { HoursFormComponent } from './hours-form/hours-form.component';
 import { ServiceList } from './../../../data/service';
-import { Service, ServiceCategory } from '../../../data/models';
+import { Agency, Service, ServiceCategory } from '../../../data/models';
 import { Component, OnInit, ViewChildren, ViewChild, QueryList, Input, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ServicesFormComponent } from './services-form/services-form.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-agency-form',
@@ -36,104 +38,173 @@ export class AgencyFormComponent implements OnInit {
     services: new FormArray([]),
     servicesInfo: new FormArray([])
   });
-  public serviceList: Array<ServiceCategory> = ServiceList;
-  constructor(private fb: FormBuilder, private utils: UtilitiesService) {
+  public serviceList: Array<ServiceCategory> = ServiceList; //TODO: change to fetch from database instead of static file.
+  public agencyList: Array<Agency> = AgencyList;
+  public agency: Agency;
+  public id: string;
+
+  constructor(private fb: FormBuilder, private utils: UtilitiesService, private route: ActivatedRoute) {
     this.addServiceCheckboxes();
     this.addServiceForms();
+    // check if id is present in query params to determine
+    // if this is an edit form or add new form
+    this.id;
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      if (this.id) {
+        this.isNew = false;
+        this.agency = this.agencyList.filter(item => this.id.includes(item.id))[0]; //TODO: change to fetch by id from the database instead of static file
+      }
+    });
+    // generate a new id if this is an add new form
     if (this.isNew) {
       this.formId = utils.generateUUID();
+    } else {
+    // otherwise set id to query param id
+      this.formId = this.id;
+      this.parseData(this.agency);
     }
   }
 
   ngOnInit(): void {
   }
 
+
+  //#region "Form Getters"
+
+  /**
+   * Get the array of service checkboxes in the form
+   * @returns array of service checkboxes
+   */
   get servicesFormArray() {
     return this.parentForm.controls['services'] as FormArray;
   }
-
+  /**
+   * Get the array of service sub-forms in the parent form
+   * @returns array of service sub-forms
+   */
   get servicesInfoFormArray() {
     return this.parentForm.controls['servicesInfo'] as FormArray;
   }
-
+  /**
+   * Get the checkbox value by given index in the form
+   * @param index array index
+   * @returns service checkbox value
+   */
   getServiceCheckboxValue(index: string) {
     return this.servicesFormArray.at(parseInt(index)).value as boolean;
   }
-
+  /**
+   * Get the checkbox form control by given index in the form
+   * @param index array index
+   * @returns service checkbox form control
+   */
   getServiceCheckbox(index: string) {
     return this.servicesFormArray.at(parseInt(index));
   }
-
+  /**
+   * Get the specific service sub-form by index
+   * @param index array index
+   * @returns specific service sub-form
+   */
   getServiceForm(index: string) {
     return this.servicesInfoFormArray.at(parseInt(index)) as FormGroup;
   }
-
+  /**
+   * Get the specific service hours sub-form by index
+   * @param index array index
+   * @returns service hours sub-form
+   */
   getServiceHourForm(index: string) {
     return this.getServiceForm(index).controls['hours'] as FormGroup;
   }
+  // #endregion "Form Getters"
 
+
+  //#region "Form Setters"
+  /**
+   * Set the value of id form field in the parent form
+   * @param value id value
+   */
   set formId(value: string) {
     this.parentForm.controls['id'].setValue(value);
   }
-
+  /**
+   * Set the value of service enabled field in the service sub-form array by index
+   * @param index array index
+   * @param value boolean value
+   */
   setServiceEnabled(index: string, value: boolean) {
     this.getServiceForm(index).controls['enabled'].setValue(value);
   }
-
+  /**
+   * Set the value of service checkbox field in the service checkbox array by index
+   * @param index array index
+   * @param value boolean value
+   */
   setServiceCheckbox(index: string, value: boolean) {
     this.getServiceCheckbox(index).setValue(value);
   }
+  // #endregion "Form Setters"
 
+  /**
+   * Add the hours sub-form for agency's general hours to the parent form
+   */
   public addHoursForm() {
     if (this.hfComponent) {
-      console.log('hours added');
       this.parentForm.controls['hours'] = this.hfComponent.hoursForm;
     }
   }
-
-  addServiceCheckboxes(values: boolean[] | void) {
-    if (values) {
-      values.forEach((item) => {
-        this.servicesFormArray.push(new FormControl(item));
-      })
-    } else {
-      this.serviceList.forEach(() => {
-        this.servicesFormArray.push(new FormControl(false));
-      })
-    }
+  /**
+   * For edit form, creates a checkbox form field for each element in the array
+   * if an array is provided and adds it to the parent form.
+   * For add form, creates checkbox form field for each element in the ServiceList array
+   * @param values void or boolean array
+   */
+  addServiceCheckboxes() {
+    this.serviceList.forEach(() => {
+      this.servicesFormArray.push(new FormControl(false));
+    })
   }
-
+  /**
+   * Create a new form control with given value as the default value
+   * @param value boolean value
+   * @returns new form control
+   */
   newServiceCheckbox(value: boolean) {
     return new FormControl(value);
   }
-
-  addServiceForms(values: Service[] | void) {
-    if (values) {
-      values.forEach((item) => {
-        this.servicesInfoFormArray.push(this.newServiceForm(item));
-      })
-    } else {
-      this.serviceList.forEach((item) => {
-        this.servicesInfoFormArray.push(this.newServiceForm({
-          enabled: false,
-          service: item.name,
-          serviceId: item.id,
-          differentHours: false,
-          description: null,
-          hours: {
-            sunday: null,
-            monday: null,
-            tuesday: null,
-            wednesday: null,
-            thursday: null,
-            friday: null,
-            saturday: null
-          }
-        }))
-      })
-    }
+  /**
+   * For edit form, creates a service sub-form for each element in the given array,
+   * if an array is provided, and adds it to the parent form.
+   * For add form, creates service sub-form for each element in the ServiceList array
+   * @param values
+   */
+  addServiceForms() {
+    this.serviceList.forEach((item) => {
+      this.servicesInfoFormArray.push(this.newServiceForm({
+        enabled: false,
+        service: item.name,
+        serviceId: item.id,
+        differentHours: false,
+        description: null,
+        hours: {
+          sunday: null,
+          monday: null,
+          tuesday: null,
+          wednesday: null,
+          thursday: null,
+          friday: null,
+          saturday: null
+        }
+      }))
+    })
   }
-
+  /**
+   * Creates a new prepopulated sub-form for a service based on given values
+   * @param value form values for a service
+   * @returns a new sub-form with values populated based on given values
+   */
   newServiceForm(value: Service): FormGroup {
     return new FormGroup({
       enabled: new FormControl(value.enabled),
@@ -152,11 +223,59 @@ export class AgencyFormComponent implements OnInit {
       })
     })
   }
-
+  /**
+   * Submit form data
+   * @param data form data to submit
+   */
   saveData(data: any) {
     var serviceForms = this.parentForm.value['servicesInfo'].filter((item: { [x: string]: boolean; }) => item['enabled'] === true)
     this.parentForm.value['servicesInfo'] = serviceForms;
     this.parentForm.value['services'] = serviceForms.map((item: { [x: string]: any; }) => item['service']);
     console.log(this.parentForm.value);
+  }
+  /**
+   * Populate the form with given agency data for editting mode
+   * @param data agency data
+   */
+  parseData(data: Agency) {
+    if (this.agency) {
+      this.parentForm.patchValue({
+        id: this.agency.id,
+        name: this.agency.name,
+        address: this.agency.address,
+        contactPhone: this.agency.contactPhone,
+        website: this.agency.website,
+        publicContactEmail: this.agency.publicContactEmail,
+        cityContactEmail: this.agency.cityContactEmail,
+      });
+      this.hours.patchValue({
+        sunday: this.agency.hours.sunday,
+        monday: this.agency.hours.monday,
+        tuesday: this.agency.hours.tuesday,
+        wednesday: this.agency.hours.wednesday,
+        thursday: this.agency.hours.thursday,
+        friday: this.agency.hours.friday,
+        saturday: this.agency.hours.saturday,
+      });
+      this.agency.servicesInfo.forEach((item, i) => {
+        this.getServiceForm(item.serviceId).patchValue({
+          enabled: item.enabled,
+          service: item.service,
+          serviceId: item.serviceId,
+          differentHours: item.differentHours,
+          description: item.description,
+          hours: {
+            sunday: item.hours.sunday,
+            monday: item.hours.monday,
+            tuesday: item.hours.tuesday,
+            wednesday: item.hours.wednesday,
+            thursday: item.hours.thursday,
+            friday: item.hours.friday,
+            saturday: item.hours.saturday,
+          }
+        })
+        this.getServiceCheckbox(item.serviceId).patchValue(item.enabled);
+      })
+    }
   }
 }

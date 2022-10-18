@@ -1,5 +1,5 @@
-<mat-sidenav-container>
-  <mat-sidenav #appDrawer rail-mode opened="true">
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #appDrawer rail-mode opened="true" >
     <mat-nav-list class="dashboard">
         <a mat-list-item routerLink="/agency/list">
           <mat-icon mat-list-icon >home</mat-icon>
@@ -23,7 +23,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary" class="mat-elevation-z1">
+    <mat-toolbar color="primary" class="mat-elevation-z1 toolbar">
       <button mat-icon-button (click)="appDrawer.toggle()">
         <mat-icon *ngIf="!appDrawer.opened">chevron_right</mat-icon>
         <mat-icon *ngIf="appDrawer.opened">chevron_left</mat-icon>

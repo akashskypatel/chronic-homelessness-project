@@ -27,7 +27,7 @@ export const AgencyList: Array<Agency> = [
       {
         enabled: true,
         service: 'Food (Meals)',
-        serviceId: 'SERVICE5',
+        serviceId: '4',
         differentHours: true,
         hours: {
           sunday: '3:30PM - 4:30PM',
@@ -43,7 +43,7 @@ export const AgencyList: Array<Agency> = [
       {
         enabled: true,
         service: 'Shelter (Men)',
-        serviceId: 'SERVICE11',
+        serviceId: '10',
         differentHours: true,
         hours: {
           sunday: '4:00PM - 6:00PM',
@@ -84,7 +84,7 @@ export const AgencyList: Array<Agency> = [
       {
         enabled: true,
         service: 'Health/Medical/Dental',
-        serviceId: 'SERVICE7',
+        serviceId: '6',
         differentHours: false,
         hours: {
           sunday: '',
@@ -125,7 +125,7 @@ export const AgencyList: Array<Agency> = [
       {
         enabled: true,
         service: 'Drop-in Center',
-        serviceId: 'SERVICE1',
+        serviceId: '0',
         differentHours: true,
         hours: {
           sunday: 'Closed',
@@ -145,7 +145,7 @@ export const AgencyList: Array<Agency> = [
       {
         enabled: true,
         service: 'Food (Meals)',
-        serviceId: 'SERVICE5',
+        serviceId: '4',
         differentHours: false,
         hours: {
           sunday: '6:30PM - 7:00PM',
@@ -162,7 +162,7 @@ export const AgencyList: Array<Agency> = [
       {
         enabled: true,
         service: 'Showers/Hygiene',
-        serviceId: 'SERVICE13',
+        serviceId: '12',
         differentHours: false,
         hours: {
           sunday: 'Closed',

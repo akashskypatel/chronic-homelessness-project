@@ -23,8 +23,13 @@ export class ServicesFormComponent implements OnInit {
 
   }
 
+  get differentHoursValue() {
+    return this.serviceForm.controls['differentHours'].value;
+  }
+
   toggleHours(event: any) {
     this.showHours = !this.showHours;
+    console.log(this.differentHoursValue);
   }
 
   toggleCard() {
