@@ -1,19 +1,20 @@
 export interface Hours {
-  sunday: string;
-  monday: string;
-  tuesday: string;
-  wednesday: string;
-  thursday: string;
-  friday: string;
-  saturday: string;
+  sunday: string | null;
+  monday: string | null;
+  tuesday: string | null;
+  wednesday: string | null;
+  thursday: string | null;
+  friday: string | null;
+  saturday: string | null;
 }
 
 export interface Service {
+  enabled: boolean
   service: string;
   serviceId: string;
   differentHours: boolean;
   hours: Hours;
-  description: string;
+  description: string | null;
 }
 
 export interface Agency {

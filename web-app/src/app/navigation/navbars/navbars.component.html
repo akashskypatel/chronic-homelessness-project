@@ -1,32 +1,35 @@
-<div class="container" [class.is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="app-name">{{ title }}</h1>
-  </mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #appDrawer rail-mode opened="true" >
+    <mat-nav-list class="dashboard">
+        <a mat-list-item routerLink="/agency/list">
+          <mat-icon mat-list-icon >home</mat-icon>
+          <p matLine>Home</p>
+        </a>
 
-  <mat-sidenav-container class="sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav class="sidenav" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-      <mat-nav-list>
-        <button mat-list-item routerLink="/agency/add">
-          <span>Agency Form</span>
-        </button>
-        <button mat-list-item routerLink="/agency/list">
-          <span>Agency List</span>
-        </button>
-        <button mat-list-item routerLink="/guide">
-          <span>Resource Guide</span>
-        </button>
-      </mat-nav-list>
-    </mat-sidenav>
+        <mat-divider></mat-divider>
 
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
-
-<!-- Copyright 2022 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at https://angular.io/license -->
+        <a mat-list-item routerLink="/agency/list">
+						<mat-icon mat-list-icon>format_list_bulleted</mat-icon>
+						<p matLine>List</p>
+				</a>
+        <a mat-list-item routerLink="/agency/add">
+						<mat-icon mat-list-icon>add</mat-icon>
+						<p matLine>Add</p>
+				</a>
+        <a mat-list-item routerLink="/guide">
+						<mat-icon mat-list-icon>map</mat-icon>
+						<p matLine >Guide</p>
+				</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="mat-elevation-z1 toolbar">
+      <button mat-icon-button (click)="appDrawer.toggle()">
+        <mat-icon *ngIf="!appDrawer.opened">chevron_right</mat-icon>
+        <mat-icon *ngIf="appDrawer.opened">chevron_left</mat-icon>
+      </button>
+      <span>{{title}}</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

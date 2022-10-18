@@ -6,11 +6,12 @@
   width: 100%;
 }
 .form-card {
-  max-width: 95%;
-  margin: 2em auto;
+  max-width: 100%;
+  margin-top: 10px;
+  //margin: 2em auto;
 }
 .form-button{
-  margin: 10px;
+  margin-top: 10px;
 }
 .icon-text-button{
   margin-right: 10px;
@@ -21,4 +22,8 @@
 
 .form-h2{
   text-align: center;
+}
+
+.content {
+  margin: 10px
 }

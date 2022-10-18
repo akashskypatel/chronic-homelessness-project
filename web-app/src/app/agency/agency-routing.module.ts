@@ -9,6 +9,11 @@ const routes: Routes = [
     component: AgencyFormComponent
   },
   {
+    path:':id/edit',
+    component: AgencyFormComponent,
+    pathMatch: 'full'
+  },
+  {
     path:'list',
     component: AgencyListComponent
   }
