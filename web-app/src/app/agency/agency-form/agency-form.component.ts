@@ -154,6 +154,9 @@ export class AgencyFormComponent implements OnInit {
   }
 
   saveData(data: any) {
+    var serviceForms = this.parentForm.value['servicesInfo'].filter((item: { [x: string]: boolean; }) => item['enabled'] === true)
+    this.parentForm.value['servicesInfo'] = serviceForms;
+    this.parentForm.value['services'] = serviceForms.map((item: { [x: string]: any; }) => item['service']);
     console.log(this.parentForm.value);
   }
 }

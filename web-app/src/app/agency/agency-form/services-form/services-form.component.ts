@@ -20,7 +20,7 @@ export class ServicesFormComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.serviceForm.controls['enabled'].disable()
+
   }
 
   toggleHours(event: any) {

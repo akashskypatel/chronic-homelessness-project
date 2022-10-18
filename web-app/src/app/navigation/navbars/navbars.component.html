@@ -33,37 +33,3 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-<!--
-<div class="container" [class.is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="toolbar mat-elevation-z3">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="app-name">{{ title }}</h1>
-  </mat-toolbar>
-  <mat-sidenav-container class="sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav rail-mode class="sidenav" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-      <mat-nav-list>
-        <button mat-list-item routerLink="/agency/list">
-          <span>Agency List</span>
-        </button>
-        <button mat-list-item routerLink="/agency/add">
-          <span>Add Agency</span>
-        </button>
-        <button mat-list-item routerLink="/guide">
-          <span>Resource Guide</span>
-        </button>
-      </mat-nav-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
--->
-<!-- Copyright 2022 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at https://angular.io/license -->
