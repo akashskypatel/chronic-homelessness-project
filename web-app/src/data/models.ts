@@ -9,6 +9,7 @@ export interface Hours {
 }
 
 export interface Service {
+  enabled: boolean
   service: string;
   serviceId: string;
   differentHours: boolean;

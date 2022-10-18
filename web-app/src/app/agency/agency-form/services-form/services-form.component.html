@@ -2,6 +2,7 @@
   <div class="service-form" [formGroup]="serviceForm">
     <mat-card class="form-card" *ngIf='showCard'>
       <mat-card-title>{{ serviceTitle }}</mat-card-title>
+      <mat-slide-toggle formControlName="enabled" class="invisible"></mat-slide-toggle>
       <mat-form-field class="full-width invisible" appearance="fill">
         <mat-label>Service Id</mat-label>
         <input matInput formControlName="serviceId" [value]="cardId" [readonly]='true'><!--  value="8:00AM - 5:00PM"-->

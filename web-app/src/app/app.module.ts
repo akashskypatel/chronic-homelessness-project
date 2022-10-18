@@ -26,7 +26,7 @@ import { UtilitiesService } from './utilities.service';
     HttpClientModule,
     MatNativeDateModule,
     MaterialModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     DataService,

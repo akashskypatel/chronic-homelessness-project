@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { AgencyList } from 'src/data/agency';
 import { Agency } from 'src/data/models';
+import { UtilitiesService } from 'src/app/utilities.service';
 
 @Component({
   selector: 'app-agency-list',
@@ -11,7 +12,7 @@ import { Agency } from 'src/data/models';
 export class AgencyListComponent implements OnInit {
   public dataSource = AgencyList;
   public displayedColumns = ["name", "contactPhone", "cityContactEmail", "dateUpdated", "dateLastEmailed", "actions"]
-  constructor() { }
+  constructor(public utils: UtilitiesService) { }
 
   ngOnInit(): void {
   }

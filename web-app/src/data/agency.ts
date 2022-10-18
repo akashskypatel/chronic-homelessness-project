@@ -25,6 +25,7 @@ export const AgencyList: Array<Agency> = [
     },
     servicesInfo: [
       {
+        enabled: true,
         service: 'Food (Meals)',
         serviceId: 'SERVICE5',
         differentHours: true,
@@ -40,6 +41,7 @@ export const AgencyList: Array<Agency> = [
         description: 'This service is available to anyone in need of a hot meal and conversation. Unfortunately due to COVID-19, we have switched from traditional dinners to bagged dinners. The daily service is at our Men\'s Shelter located at 624 Lexington Ave. Orlando, FL 32801 from 3:30 p.m. to 4:30 p.m.'
       },
       {
+        enabled: true,
         service: 'Shelter (Men)',
         serviceId: 'SERVICE11',
         differentHours: true,
@@ -80,6 +82,7 @@ export const AgencyList: Array<Agency> = [
     },
     servicesInfo: [
       {
+        enabled: true,
         service: 'Health/Medical/Dental',
         serviceId: 'SERVICE7',
         differentHours: false,
@@ -120,6 +123,7 @@ export const AgencyList: Array<Agency> = [
     },
     servicesInfo: [
       {
+        enabled: true,
         service: 'Drop-in Center',
         serviceId: 'SERVICE1',
         differentHours: true,
@@ -139,6 +143,7 @@ export const AgencyList: Array<Agency> = [
         +"\nVehicles: Please enter through the gate at 18 North Terry Avenue.'"
       },
       {
+        enabled: true,
         service: 'Food (Meals)',
         serviceId: 'SERVICE5',
         differentHours: false,
@@ -155,6 +160,7 @@ export const AgencyList: Array<Agency> = [
         +"\nPedestrians: Please enter the campus through the gate located on Terry Avenue, between Central Boulevard and Ossie Street."
       },
       {
+        enabled: true,
         service: 'Showers/Hygiene',
         serviceId: 'SERVICE13',
         differentHours: false,

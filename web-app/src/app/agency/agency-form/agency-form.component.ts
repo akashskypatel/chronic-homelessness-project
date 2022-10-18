@@ -56,6 +56,14 @@ export class AgencyFormComponent implements OnInit {
     return this.parentForm.controls['servicesInfo'] as FormArray;
   }
 
+  getServiceCheckboxValue(index: string) {
+    return this.servicesFormArray.at(parseInt(index)).value as boolean;
+  }
+
+  getServiceCheckbox(index: string) {
+    return this.servicesFormArray.at(parseInt(index));
+  }
+
   getServiceForm(index: string) {
     return this.servicesInfoFormArray.at(parseInt(index)) as FormGroup;
   }
@@ -66,6 +74,14 @@ export class AgencyFormComponent implements OnInit {
 
   set formId(value: string) {
     this.parentForm.controls['id'].setValue(value);
+  }
+
+  setServiceEnabled(index: string, value: boolean) {
+    this.getServiceForm(index).controls['enabled'].setValue(value);
+  }
+
+  setServiceCheckbox(index: string, value: boolean) {
+    this.getServiceCheckbox(index).setValue(value);
   }
 
   public addHoursForm() {
@@ -99,6 +115,7 @@ export class AgencyFormComponent implements OnInit {
     } else {
       this.serviceList.forEach((item) => {
         this.servicesInfoFormArray.push(this.newServiceForm({
+          enabled: false,
           service: item.name,
           serviceId: item.id,
           differentHours: false,
@@ -119,6 +136,7 @@ export class AgencyFormComponent implements OnInit {
 
   newServiceForm(value: Service): FormGroup {
     return new FormGroup({
+      enabled: new FormControl(value.enabled),
       service: new FormControl(value.service),
       serviceId: new FormControl(value.serviceId),
       differentHours: new FormControl(value.differentHours),
@@ -135,13 +153,6 @@ export class AgencyFormComponent implements OnInit {
     })
   }
 
-  serviceToggle(event: any) {
-    this.serviceCards.forEach(element => {
-      if (element.cardId == event.source.value) {
-        element.showCard = event.source.checked;
-      }
-    });
-  }
   saveData(data: any) {
     console.log(this.parentForm.value);
   }
