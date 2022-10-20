@@ -8,10 +8,13 @@
   right: 0;
 }
 
-.is-mobile .toolbar {
-  position: fixed;
+.toolbar {
+  //position: absolute;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
+  position: sticky;
+  align-content: center;
+  top: 0;
 }
 
 h1.app-name {

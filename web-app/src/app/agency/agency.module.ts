@@ -10,6 +10,7 @@ import { HoursFormComponent } from './agency-form/hours-form/hours-form.componen
 import { DataService } from '../data.service';
 import { UtilitiesService } from '../utilities.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 @NgModule({
   declarations: [
     AgencyFormComponent,
@@ -22,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AgencyRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GooglePlaceModule
   ],
   providers: [
     DataService,

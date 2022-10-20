@@ -7,15 +7,19 @@ import { Component, OnInit, ViewChildren, ViewChild, QueryList, Input, AfterView
 import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ServicesFormComponent } from './services-form/services-form.component';
 import { ActivatedRoute } from '@angular/router';
+import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 
 @Component({
   selector: 'app-agency-form',
   templateUrl: './agency-form.component.html',
   styleUrls: ['./agency-form.component.scss']
 })
-export class AgencyFormComponent implements OnInit {
+export class AgencyFormComponent implements OnInit,AfterViewInit {
   @ViewChildren(ServicesFormComponent) private serviceCards!: QueryList<ServicesFormComponent>;
   @ViewChild(HoursFormComponent) private hfComponent!: HoursFormComponent;
+  //@ViewChild("placesRef") placesRef!: GooglePlaceDirective;
+
   public isNew: boolean = true;
   public hours = new FormGroup({
     sunday: new FormControl(),
@@ -42,6 +46,14 @@ export class AgencyFormComponent implements OnInit {
   public agencyList: Array<Agency> = AgencyList;
   public agency: Agency;
   public id: string;
+  userAddress: string = '';
+  userLatitude: string = '';
+  userLongitude: string = '';
+  addressId: string = '';
+  options = {
+    types: ['address'],
+    componentRestrictions: { country: 'US' }
+  } as unknown as Options
 
   constructor(private fb: FormBuilder, private utils: UtilitiesService, private route: ActivatedRoute) {
     this.addServiceCheckboxes();
@@ -69,6 +81,15 @@ export class AgencyFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngAfterViewInit() {
+
+  }
+
+  handleAddressChange(address: any) {
+    this.userAddress = address.formatted_address
+    this.userLatitude = address.geometry.location.lat()
+    this.userLongitude = address.geometry.location.lng()
+  }
 
   //#region "Form Getters"
 

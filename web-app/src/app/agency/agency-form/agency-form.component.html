@@ -19,8 +19,11 @@
         <input matInput formControlName="name"><!-- value="Salvation Army"-->
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
+        <input matInput ngx-google-places-autocomplete [options]="options" (onAddressChange)="handleAddressChange($event)" formControlName="address" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
         <mat-label>Address</mat-label>
-        <input matInput formControlName="address"><!--  value="400 W. Colonial Drive, Orlando, FL 32804"-->
+        <input matInput><!--  value="400 W. Colonial Drive, Orlando, FL 32804"-->
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Phone</mat-label>

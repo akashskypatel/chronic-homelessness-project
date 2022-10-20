@@ -1,3 +1,4 @@
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { NavigationModule } from './navigation/navigation.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,7 +27,8 @@ import { UtilitiesService } from './utilities.service';
     HttpClientModule,
     MatNativeDateModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GooglePlaceModule
   ],
   providers: [
     DataService,

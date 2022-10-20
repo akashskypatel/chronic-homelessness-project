@@ -13,13 +13,13 @@ export class NavbarsComponent implements AfterViewInit {
   @ViewChild(MatSidenav) appDrawer: MatSidenav;
 
   constructor(public breakpointObserver: BreakpointObserver) {
-    console.log(this.appDrawer);
+
   }
   ngAfterViewInit() {
 
   }
   openedChange(val: any) {
-    console.log('openedChange: ', val);
+
   }
 
 }

@@ -1,6 +1,7 @@
 table {
   min-width: 150px;
   width: 100%;
+  table-layout: fixed;
 }
 .table-list{
   margin-top: 10px;
@@ -16,4 +17,22 @@ table {
 
 .content {
   margin: 10px;
+}
+
+.mat-row:hover .mat-cell {
+  background-color:rgb(240, 240, 240);
+}
+
+.mat-row:nth-child(even){
+  background-color: rgb(245, 245, 245);
+}
+th, td {
+  overflow: hidden;
+  width:auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+.table-header {
+  text-align: center;
 }
