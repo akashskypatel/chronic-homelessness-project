@@ -31,8 +31,14 @@ th, td {
   width:auto;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.align-center {
   text-align: center;
 }
-.table-header {
-  text-align: center;
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+th.mat-sort-header-sorted {
+  color: black;
 }

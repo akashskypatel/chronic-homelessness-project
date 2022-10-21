@@ -1,50 +1,56 @@
 <div class="content">
   <h1 class="page-header">Agency List</h1>
   <mat-divider></mat-divider>
+<!--
   <button type="button" class="form-button" mat-raised-button class="form-button" color="primary" routerLink="/agency/add">
-    <!--(click)="saveData($event)"-->
     <mat-icon class="material-symbols-outlined icon-text-button">add</mat-icon>
     <span>Add Agency</span>
   </button>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-list">
+-->
+  <br>
+  <mat-form-field class="full-width" appearance="fill">
+    <mat-label>Search Agencies</mat-label>
+    <input matInput type="text" [formControl]="searchField"><!-- value="Salvation Army"-->
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-list" matSort (matSortChange)="announceSortChange($event)">
 
     <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef class="table-header"> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Name"> Name </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
     <!-- Phone Column -->
     <ng-container matColumnDef="contactPhone">
-      <th mat-header-cell *matHeaderCellDef class="table-header"> Phone </th>
-      <td mat-cell *matCellDef="let element"> {{element.contactPhone}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Phone"> Phone </th>
+      <td mat-cell *matCellDef="let element" class="align-center"> {{element.contactPhone}} </td>
     </ng-container>
 
     <!-- City Contact Email Column -->
     <ng-container matColumnDef="cityContactEmail">
-      <th mat-header-cell *matHeaderCellDef class="table-header"> City Contact Email </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by City Contact Email"> City Contact Email </th>
       <td mat-cell *matCellDef="let element"> {{element.cityContactEmail}} </td>
     </ng-container>
 
     <!-- Date Updated Column -->
     <ng-container matColumnDef="dateUpdated">
-      <th mat-header-cell *matHeaderCellDef class="table-header"> Date Updated </th>
-      <td mat-cell *matCellDef="let element"> {{utils.formatDateString(element.dateUpdated,'MM/DD/YY h:mm:ss a')}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Date Updated"> Date Updated </th>
+      <td mat-cell *matCellDef="let element" class="align-center"> {{utils.formatDateString(element.dateUpdated,'MM/DD/YY h:mm:ss a')}} </td>
     </ng-container>
 
     <!-- Date Emailed Column -->
     <ng-container matColumnDef="dateLastEmailed">
-      <th mat-header-cell *matHeaderCellDef class="table-header"> Date Emailed </th>
-      <td mat-cell *matCellDef="let element"> {{utils.formatDateString(element.dateLastEmailed,'MM/DD/YY h:mm:ss a')}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Date Emailed"> Date Emailed </th>
+      <td mat-cell *matCellDef="let element" class="align-center"> {{utils.formatDateString(element.dateLastEmailed,'MM/DD/YY h:mm:ss a')}} </td>
     </ng-container>
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef class="table-header"> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef class="align-center"> Actions </th>
+      <td mat-cell *matCellDef="let element" class="align-center">
         <button type="button" mat-raised-button class="action-button" color="primary" [routerLink]="['/agency/',element.id,'edit']">
           <mat-icon class="material-symbols-outlined icon-text-button">edit</mat-icon>
         </button>
