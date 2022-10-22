@@ -87,17 +87,26 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.loadGoogleMapsApi();
+  }
+
+  ngAfterViewInit() {
+
+  }
+  /**
+   * Lazy load google maps API
+   */
+  loadGoogleMapsApi() {
     this.apiLoaded = this.httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=${google_api_key}&libraries=places&language=en`, 'callback')
         .pipe(
           map(() => true),
           catchError((err) => of(this.onError(err))),
         );
   }
-
-  ngAfterViewInit() {
-
-  }
-
+  /**
+   * Set address values when user select autocompleted address
+   * @param address user entered address string
+   */
   handleAddressChange(address: any) {
     this.userAddress = address.formatted_address;
     this.address.setValue(this.userAddress);
@@ -292,6 +301,7 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
         friday: this.agency.hours.friday,
         saturday: this.agency.hours.saturday,
       });
+      // populate each service sub-forms
       this.agency.servicesInfo.forEach((item, i) => {
         this.getServiceForm(item.serviceId).patchValue({
           enabled: item.enabled,
