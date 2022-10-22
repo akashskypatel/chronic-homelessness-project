@@ -8,7 +8,11 @@ import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ServicesFormComponent } from './services-form/services-form.component';
 import { ActivatedRoute } from '@angular/router';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
-import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+
+const google_api_key = '<REPLACE WITH YOUR API KEY>';
 
 @Component({
   selector: 'app-agency-form',
@@ -18,8 +22,7 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 export class AgencyFormComponent implements OnInit,AfterViewInit {
   @ViewChildren(ServicesFormComponent) private serviceCards!: QueryList<ServicesFormComponent>;
   @ViewChild(HoursFormComponent) private hfComponent!: HoursFormComponent;
-  //@ViewChild("placesRef") placesRef!: GooglePlaceDirective;
-
+  public address = new FormControl();
   public isNew: boolean = true;
   public hours = new FormGroup({
     sunday: new FormControl(),
@@ -33,7 +36,7 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
   public parentForm: FormGroup = new FormGroup({
     id: new FormControl(),
     name: new FormControl(),
-    address: new FormControl(),
+    address: this.address,
     contactPhone: new FormControl(),
     website: new FormControl(),
     publicContactEmail: new FormControl(),
@@ -50,12 +53,13 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
   userLatitude: string = '';
   userLongitude: string = '';
   addressId: string = '';
-  options = {
+  googleoptions = {
     types: ['address'],
     componentRestrictions: { country: 'US' }
   } as unknown as Options
+  apiLoaded: Observable<boolean> = of(false);
 
-  constructor(private fb: FormBuilder, private utils: UtilitiesService, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private utils: UtilitiesService, private route: ActivatedRoute, private httpClient: HttpClient) {
     this.addServiceCheckboxes();
     this.addServiceForms();
     // check if id is present in query params to determine
@@ -78,7 +82,16 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
     }
   }
 
+  onError(err: any) {
+    return false;
+  }
+
   ngOnInit(): void {
+    this.apiLoaded = this.httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=${google_api_key}&libraries=places&language=en`, 'callback')
+        .pipe(
+          map(() => true),
+          catchError((err) => of(this.onError(err))),
+        );
   }
 
   ngAfterViewInit() {
@@ -86,9 +99,10 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
   }
 
   handleAddressChange(address: any) {
-    this.userAddress = address.formatted_address
-    this.userLatitude = address.geometry.location.lat()
-    this.userLongitude = address.geometry.location.lng()
+    this.userAddress = address.formatted_address;
+    this.address.setValue(this.userAddress);
+    this.userLatitude = address.geometry.location.lat();
+    this.userLongitude = address.geometry.location.lng();
   }
 
   //#region "Form Getters"
