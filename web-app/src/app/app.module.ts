@@ -10,9 +10,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MaterialModule} from '../material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { DataService } from './data.service';
 import { UtilitiesService } from './utilities.service';
+import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-autocomplete';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,10 @@ import { UtilitiesService } from './utilities.service';
     MatNativeDateModule,
     MaterialModule,
     ReactiveFormsModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    GoogleMapsModule,
+    HttpClientJsonpModule,
+    GeoapifyGeocoderAutocompleteModule.withConfig('API_KEY')
   ],
   providers: [
     DataService,

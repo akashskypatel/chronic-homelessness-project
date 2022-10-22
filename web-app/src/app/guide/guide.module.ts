@@ -5,6 +5,8 @@ import { GuideRoutingModule } from './guide-routing.module';
 import { ResourceGuideComponent } from './resource-guide/resource-guide.component';
 import { DataService } from '../data.service';
 import { UtilitiesService } from '../utilities.service';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,10 @@ import { UtilitiesService } from '../utilities.service';
   ],
   imports: [
     CommonModule,
-    GuideRoutingModule
+    GuideRoutingModule,
+    GoogleMapsModule,
+    HttpClientModule,
+    HttpClientJsonpModule
   ],
   providers: [
     DataService,
