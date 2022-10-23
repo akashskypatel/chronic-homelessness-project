@@ -21,6 +21,10 @@ export interface Agency {
   id: string;
   name: string;
   address: string;
+  geocode?: {
+    lat?: number;
+    lng?: number;
+  }
   contactPhone: string;
   website: string;
   publicContactEmail: string;

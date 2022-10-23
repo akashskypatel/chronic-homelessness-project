@@ -49,10 +49,9 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
   public agencyList: Array<Agency> = AgencyList;
   public agency: Agency;
   public id: string;
-  userAddress: string = '';
-  userLatitude: string = '';
-  userLongitude: string = '';
-  addressId: string = '';
+  agencyAddress: string = '';
+  agencyLatitude: string = '';
+  agencyLongitude: string = '';
   googleoptions = {
     types: ['address'],
     componentRestrictions: { country: 'US' }
@@ -108,10 +107,10 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
    * @param address user entered address string
    */
   handleAddressChange(address: any) {
-    this.userAddress = address.formatted_address;
-    this.address.setValue(this.userAddress);
-    this.userLatitude = address.geometry.location.lat();
-    this.userLongitude = address.geometry.location.lng();
+    this.agencyAddress = address.formatted_address;
+    this.address.setValue(this.agencyAddress);
+    this.agencyLatitude = address.geometry.location.lat();
+    this.agencyLongitude = address.geometry.location.lng();
   }
 
   //#region "Form Getters"
@@ -269,12 +268,13 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
   }
   /**
    * Submit form data
-   * @param data form data to submit
    */
-  saveData(data: any) {
+  saveData(event: any) {
     var serviceForms = this.parentForm.value['servicesInfo'].filter((item: { [x: string]: boolean; }) => item['enabled'] === true)
     this.parentForm.value['servicesInfo'] = serviceForms;
     this.parentForm.value['services'] = serviceForms.map((item: { [x: string]: any; }) => item['service']);
+    let data = this.parentForm.value;
+    data['geocode'] =  { lat: this.agencyLatitude, lng: this.agencyLongitude };
     console.log(this.parentForm.value);
   }
   /**
