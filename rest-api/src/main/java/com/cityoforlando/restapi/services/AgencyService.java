@@ -29,9 +29,14 @@ public class AgencyService {
         return agencyRepository.findAll();
     }
 
-    public Agency getAgencyByName(String name) {
+    public List<Agency> getAgencyByName(String name) {
         return agencyRepository.findByName(name).orElseThrow(
                 () -> new RuntimeException(String.format("Cannot find Agency by name: %s", name)));
+    }
+
+    public Agency getAgencyById(String id) {
+        return agencyRepository.findById(id).orElseThrow(
+                () -> new RuntimeException(String.format("Cannot find Agency by id: %s", id)));
     }
 
     public void deleteAgency(String id) {

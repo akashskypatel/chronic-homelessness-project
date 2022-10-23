@@ -17,29 +17,39 @@ public class AgencyController {
         this.agencyService = agencyService;
     }
 
+    @CrossOrigin
     @PostMapping
     public ResponseEntity<Agency> addAgency(@RequestBody Agency agency) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(agencyService.addAgency(agency));
     }
 
+    @CrossOrigin
     @PutMapping
     public ResponseEntity updateAgency(@RequestBody Agency agency) {
         agencyService.updateAgency(agency);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/")
+    @CrossOrigin
+    @GetMapping("")
     public ResponseEntity<List<Agency>> getAllAgency() {
         return ResponseEntity.ok(agencyService.getAllAgencies());
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<Agency> getAgencyByName(@PathVariable String name) {
+    @CrossOrigin
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Agency>> getAgencyByName(@PathVariable String name) {
         return ResponseEntity.ok(agencyService.getAgencyByName(name));
     }
+    @CrossOrigin
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Agency> getAgencyById(@PathVariable String id) {
+        return ResponseEntity.ok(agencyService.getAgencyById(id));
+    }
 
-    @DeleteMapping("/{id}")
+    @CrossOrigin
+    @DeleteMapping("/id/{id}")
     public ResponseEntity deleteAgency(@PathVariable String id) {
         agencyService.deleteAgency(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
