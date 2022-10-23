@@ -15,6 +15,7 @@ public class Agency {
     @Indexed(unique = true)
     private String name;
     private String address;
+    private Geocode geocode;
     private String contactPhone;
     private String website;
     private String publicContactEmail;
