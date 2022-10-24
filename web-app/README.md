@@ -29,6 +29,27 @@ ng serve -o
 ```
 7. To terminate the dev server in VS Code press Ctrl+C (both mac and pc) in the terminal/concole. If you are using another IDE check your IDE's console interrupt shortcut.
 
+## Updating your local repo
+
+1. Fork the repo again or sync your repo with the source branch
+
+2. Open web-app folder in your IDE
+
+3. Open a console/terminal window in "web-app" folder in your IDE and make sure angular and yarn are installed globally
+
+```
+npm install -g @angular/cli
+npm install -g yarn
+```
+
+4. Re-install/Update project dependencies
+```
+yarn install
+```
+
+5. Run the project normally (See steps 6-7 in Getting started instructions)
+
+
 # Other Angular commands for reference
 
 ## Development server
