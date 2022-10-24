@@ -3,7 +3,7 @@
   <mat-divider></mat-divider>
   <form class="form-content" [formGroup]="parentForm">
     <p>
-      <button type="button" mat-raised-button class="form-button" color="primary" (click)="saveData($event)">
+      <button type="button" mat-raised-button class="form-button" color="primary" (click)="validateForm()">
         <mat-icon class="material-symbols-outlined icon-text-button">save</mat-icon>
         <span>SAVE</span>
       </button>
@@ -12,33 +12,45 @@
       <h2>General Information:</h2>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Id</mat-label>
-        <input matInput formControlName="id" [readonly]='true'><!-- value="Salvation Army"-->
+        <input matInput formControlName="id" [readonly]='true'>
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Agency Name</mat-label>
-        <input matInput formControlName="name"><!-- value="Salvation Army"-->
+        <input matInput formControlName="name"  required>
       </mat-form-field>
+      <!--google places autocomplete api-->
+      <div *ngIf="apiLoaded | async">
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Address</mat-label>
-        <input matInput formControlName="address"><!--  value="400 W. Colonial Drive, Orlando, FL 32804"-->
+        <input matInput ngx-google-places-autocomplete [options]="googleoptions" (onAddressChange)="handleAddressChange($event)" formControlName="address" [formControl]="address"  required>
       </mat-form-field>
+      </div>
+      <!--alternate autocomplete api using geoapify-->
+      <!--<app-address-autocomplete></app-address-autocomplete>-->
+      <!--plain address field-->
+    <!--
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput>
+      </mat-form-field>
+      -->
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Phone</mat-label>
-        <input matInput formControlName="contactPhone"><!--  value="407.423.8581"-->
+        <input matInput formControlName="contactPhone">
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Website</mat-label>
-        <input matInput formControlName="website"><!--  value="https://salvationarmyflorida.org/orlando#assistance"-->
+        <input matInput formControlName="website">
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Public Contact Email</mat-label>
-        <input matInput formControlName="publicContactEmail"><!--  value="robin.smith@uss.salvationarmy.org"-->
+        <input matInput formControlName="publicContactEmail"  required>
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>City Contact Email</mat-label>
-        <input matInput formControlName="cityContactEmail"><!--  value="robin.smith@uss.salvationarmy.org"-->
+        <input matInput formControlName="cityContactEmail"  required>
       </mat-form-field>
-      <app-hours-form [hoursForm]="hours"></app-hours-form>
+      <app-hours-form [hoursForm]="hours" [hoursRequired]="true"></app-hours-form>
     </mat-card>
     <mat-card class="form-card">
       <mat-card-title>Services Provided</mat-card-title>

@@ -1,3 +1,4 @@
+import { ReusableModule } from './../reusable/reusable.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -10,19 +11,30 @@ import { HoursFormComponent } from './agency-form/hours-form/hours-form.componen
 import { DataService } from '../data.service';
 import { UtilitiesService } from '../utilities.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-autocomplete';
+import { AddressAutocompleteComponent } from './agency-form/address-autocomplete/address-autocomplete.component';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AgencyFormComponent,
     AgencyListComponent,
     ServicesFormComponent,
-    HoursFormComponent
+    HoursFormComponent,
+    AddressAutocompleteComponent
   ],
   imports: [
     CommonModule,
     AgencyRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GooglePlaceModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
+    ReusableModule,
+    GeoapifyGeocoderAutocompleteModule.withConfig('API_KEY')
   ],
   providers: [
     DataService,

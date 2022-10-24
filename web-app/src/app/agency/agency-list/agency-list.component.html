@@ -1,57 +1,77 @@
 <div class="content">
   <h1 class="page-header">Agency List</h1>
   <mat-divider></mat-divider>
-  <button type="button" class="form-button" mat-raised-button class="form-button" color="primary" routerLink="/agency/add">
-    <!--(click)="saveData($event)"-->
-    <mat-icon class="material-symbols-outlined icon-text-button">add</mat-icon>
-    <span>Add Agency</span>
+  <br>
+<div class="list-toolbar">
+  <span class="justify-left">
+    <!--TEST element only-->
+    <button *ngIf="!environment.production" type="button" class="form-button" mat-raised-button class="form-button" color="primary" (click)="uploadTestData()">
+      <mat-icon class="material-symbols-outlined icon-text-button">add</mat-icon>
+      <span>Add Test Data</span>
+    </button>
+  </span>
+  <span class="justify-center">
+    <mat-form-field class="search-bar" appearance="fill">
+      <input matInput type="search" [formControl]="searchField" placeholder="Search Agencies" class="search-input"><!-- value="Salvation Army"-->
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </span>
+  <span class="justify-right">
+  <button type="button" class="form-button" mat-raised-button class="form-button" color="primary" (click)="fetchData()">
+    <mat-icon class="material-symbols-outlined icon-text-button">refresh</mat-icon>
+    <span>Refresh</span>
   </button>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-list">
+  </span>
+</div>
+  <div class="spinner-container" *ngIf="loading | async">
+    <mat-spinner></mat-spinner>
+  </div>
 
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-list" matSort (matSortChange)="announceSortChange($event)">
     <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Name"> Name </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
     <!-- Phone Column -->
     <ng-container matColumnDef="contactPhone">
-      <th mat-header-cell *matHeaderCellDef> Phone </th>
-      <td mat-cell *matCellDef="let element"> {{element.contactPhone}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Phone"> Phone </th>
+      <td mat-cell *matCellDef="let element" class="align-center"> {{element.contactPhone}} </td>
     </ng-container>
 
     <!-- City Contact Email Column -->
     <ng-container matColumnDef="cityContactEmail">
-      <th mat-header-cell *matHeaderCellDef> City Contact Email </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by City Contact Email"> City Contact Email </th>
       <td mat-cell *matCellDef="let element"> {{element.cityContactEmail}} </td>
     </ng-container>
 
     <!-- Date Updated Column -->
     <ng-container matColumnDef="dateUpdated">
-      <th mat-header-cell *matHeaderCellDef> Date Updated </th>
-      <td mat-cell *matCellDef="let element"> {{utils.formatDateString(element.dateUpdated,'MM/DD/YY h:mm:ss a')}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Date Updated"> Date Updated </th>
+      <td mat-cell *matCellDef="let element" class="align-center"> {{utils.formatDateString(element.dateUpdated,'MM/DD/YY h:mm:ss a')}} </td>
     </ng-container>
 
     <!-- Date Emailed Column -->
     <ng-container matColumnDef="dateLastEmailed">
-      <th mat-header-cell *matHeaderCellDef> Date Emailed </th>
-      <td mat-cell *matCellDef="let element"> {{utils.formatDateString(element.dateLastEmailed,'MM/DD/YY h:mm:ss a')}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Date Emailed"> Date Emailed </th>
+      <td mat-cell *matCellDef="let element" class="align-center"> {{utils.formatDateString(element.dateLastEmailed,'MM/DD/YY h:mm:ss a')}} </td>
     </ng-container>
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef class="align-center"> Actions </th>
+      <td mat-cell *matCellDef="let element" class="align-center">
         <button type="button" mat-raised-button class="action-button" color="primary" [routerLink]="['/agency/',element.id,'edit']">
           <mat-icon class="material-symbols-outlined icon-text-button">edit</mat-icon>
         </button>
-        <button type="button" mat-raised-button class="action-button" color="primary">
+        <button type="button" mat-raised-button class="action-button" color="primary" (click)="sendEmail(element.id)">
           <mat-icon class="material-symbols-outlined icon-text-button">mail</mat-icon>
         </button>
-        <button type="button" mat-raised-button class="action-button" color="primary">
+        <button type="button" mat-raised-button class="action-button" color="primary" (click)="deleteAgency(element.id, element.name)">
           <mat-icon class="material-symbols-outlined icon-text-button">delete</mat-icon>
         </button>
       </td>
