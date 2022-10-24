@@ -1,0 +1,35 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #appDrawer rail-mode opened="true" >
+    <mat-nav-list class="dashboard">
+        <a mat-list-item routerLink="/agency/list">
+          <mat-icon mat-list-icon >home</mat-icon>
+          <p matLine>Home</p>
+        </a>
+
+        <mat-divider></mat-divider>
+
+        <a mat-list-item routerLink="/agency/list">
+						<mat-icon mat-list-icon>format_list_bulleted</mat-icon>
+						<p matLine>List</p>
+				</a>
+        <a mat-list-item routerLink="/agency/add">
+						<mat-icon mat-list-icon>add</mat-icon>
+						<p matLine>Add</p>
+				</a>
+        <a mat-list-item routerLink="/guide">
+						<mat-icon mat-list-icon>map</mat-icon>
+						<p matLine >Guide</p>
+				</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="mat-elevation-z1 toolbar">
+      <button mat-icon-button (click)="appDrawer.toggle()">
+        <mat-icon *ngIf="!appDrawer.opened">chevron_right</mat-icon>
+        <mat-icon *ngIf="appDrawer.opened">chevron_left</mat-icon>
+      </button>
+      <span>{{title}}</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,73 @@
+<div class="content">
+  <h1>Update Agency Information</h1>
+  <mat-divider></mat-divider>
+  <form class="form-content" [formGroup]="parentForm">
+    <p>
+      <button type="button" mat-raised-button class="form-button" color="primary" (click)="validateForm()">
+        <mat-icon class="material-symbols-outlined icon-text-button">save</mat-icon>
+        <span>SAVE</span>
+      </button>
+    </p>
+    <mat-card class="form-card">
+      <h2>General Information:</h2>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Id</mat-label>
+        <input matInput formControlName="id" [readonly]='true'>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Agency Name</mat-label>
+        <input matInput formControlName="name"  required>
+      </mat-form-field>
+      <!--google places autocomplete api-->
+      <div *ngIf="apiLoaded | async">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput ngx-google-places-autocomplete [options]="googleoptions" (onAddressChange)="handleAddressChange($event)" formControlName="address" [formControl]="address"  required>
+      </mat-form-field>
+      </div>
+      <!--alternate autocomplete api using geoapify-->
+      <!--<app-address-autocomplete></app-address-autocomplete>-->
+      <!--plain address field-->
+    <!--
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput>
+      </mat-form-field>
+      -->
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="contactPhone">
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Website</mat-label>
+        <input matInput formControlName="website">
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Public Contact Email</mat-label>
+        <input matInput formControlName="publicContactEmail"  required>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>City Contact Email</mat-label>
+        <input matInput formControlName="cityContactEmail"  required>
+      </mat-form-field>
+      <app-hours-form [hoursForm]="hours" [hoursRequired]="true"></app-hours-form>
+    </mat-card>
+    <mat-card class="form-card">
+      <mat-card-title>Services Provided</mat-card-title>
+      <section class="checkbox-section">
+        <div *ngFor="let service of servicesFormArray.controls; let i = index" formArrayName="services">
+          <mat-checkbox [value]='serviceList[i].id'
+            (change)="setServiceEnabled($event.source.value,$event.source.checked)"
+            [formControlName]="serviceList[i].id">{{ serviceList[i].name }}</mat-checkbox>
+        </div>
+      </section>
+    </mat-card>
+    <div *ngFor="let service of servicesFormArray.controls; let i = index" class="service-form-array"
+      formArrayName="servicesInfo">
+      <app-services-form [serviceTitle]='serviceList[i].name' [cardId]='serviceList[i].id' [id]='serviceList[i].id'
+        [formGroupName]="serviceList[i].id" [serviceForm]="getServiceForm(serviceList[i].id)"
+        [hours]="getServiceHourForm(serviceList[i].id)" [showCard]="getServiceCheckboxValue(serviceList[i].id)">
+      </app-services-form>
+    </div>
+  </form>
+</div>

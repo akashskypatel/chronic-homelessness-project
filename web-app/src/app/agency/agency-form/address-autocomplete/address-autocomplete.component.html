@@ -1,0 +1,13 @@
+<mat-form-field floatLabel="never" class="full-width" appearance="fill">
+  <mat-label>Address</mat-label>
+  <input matInput type="text" [matAutocomplete]="auto"
+    [formControl]="inputFieldFormControl" placeholder="Enter location here" formControlName="address"/>
+
+  <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+    <mat-option *ngFor="let option of searchOptions | async" [value]="option.shortAddress"
+      (onSelectionChange)="optionSelectionChange(option, $event)"
+      [matTooltip]="option.fullAddress" matTooltipShowDelay="1000">
+      <span class="mat-body">{{ option.shortAddress }}</span>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
