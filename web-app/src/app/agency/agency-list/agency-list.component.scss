@@ -11,10 +11,6 @@ table {
   margin-left: 2px;
 }
 
-.form-button {
-  margin-top: 10px;
-}
-
 .content {
   margin: 10px;
 }
@@ -41,4 +37,43 @@ th, td {
 }
 th.mat-sort-header-sorted {
   color: black;
+}
+/*
+.list-toolbar {
+  display: flex;
+  height:50px;
+  flex-flow: column wrap;
+  align-content: space-between;
+}
+*/
+
+.list-toolbar {
+  height: fit-content;
+}
+
+.list-toolbar>.justify-left,
+.list-toolbar>.justify-center,
+.list-toolbar>.justify-right {
+  display: inline-block;
+  width: 33%;
+}
+
+.list-toolbar>.justify-left {
+  text-align: left;
+  align-items: center;
+}
+.list-toolbar>.justify-center {
+  text-align: center;
+  align-items: center;
+}
+.list-toolbar>.justify-right {
+  text-align: right;
+  align-items: center;
+}
+.search-bar {
+  width: 100%;
+}
+
+.searh-icon {
+  align-self: center;
 }

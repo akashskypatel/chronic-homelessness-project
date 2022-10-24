@@ -16,10 +16,10 @@
       <div *ngIf='!this.differentHoursValue'>
         <br>
       </div>
-      <app-hours-form *ngIf='this.differentHoursValue' [hoursForm]="hours"></app-hours-form>
+      <app-hours-form *ngIf='this.differentHoursValue' [hoursForm]="hours" [hoursRequired]="this.differentHoursValue"></app-hours-form>
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description" formControlName="description"></textarea>
+        <textarea matInput formControlName="description" formControlName="description" [required]="showCard"></textarea>
       </mat-form-field>
     </mat-card>
   </div>

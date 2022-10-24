@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HoursFormComponent implements OnInit {
   @Input() public hoursForm: FormGroup;
-
+  @Input() public hoursRequired: boolean;
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {

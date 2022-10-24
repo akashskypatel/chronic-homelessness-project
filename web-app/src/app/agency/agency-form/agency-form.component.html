@@ -3,7 +3,7 @@
   <mat-divider></mat-divider>
   <form class="form-content" [formGroup]="parentForm">
     <p>
-      <button type="button" mat-raised-button class="form-button" color="primary" (click)="saveData($event)">
+      <button type="button" mat-raised-button class="form-button" color="primary" (click)="validateForm()">
         <mat-icon class="material-symbols-outlined icon-text-button">save</mat-icon>
         <span>SAVE</span>
       </button>
@@ -16,13 +16,13 @@
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Agency Name</mat-label>
-        <input matInput formControlName="name">
+        <input matInput formControlName="name"  required>
       </mat-form-field>
       <!--google places autocomplete api-->
       <div *ngIf="apiLoaded | async">
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Address</mat-label>
-        <input matInput ngx-google-places-autocomplete [options]="googleoptions" (onAddressChange)="handleAddressChange($event)" formControlName="address" [formControl]="address"/>
+        <input matInput ngx-google-places-autocomplete [options]="googleoptions" (onAddressChange)="handleAddressChange($event)" formControlName="address" [formControl]="address"  required>
       </mat-form-field>
       </div>
       <!--alternate autocomplete api using geoapify-->
@@ -44,13 +44,13 @@
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Public Contact Email</mat-label>
-        <input matInput formControlName="publicContactEmail">
+        <input matInput formControlName="publicContactEmail"  required>
       </mat-form-field>
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>City Contact Email</mat-label>
-        <input matInput formControlName="cityContactEmail">
+        <input matInput formControlName="cityContactEmail"  required>
       </mat-form-field>
-      <app-hours-form [hoursForm]="hours"></app-hours-form>
+      <app-hours-form [hoursForm]="hours" [hoursRequired]="true"></app-hours-form>
     </mat-card>
     <mat-card class="form-card">
       <mat-card-title>Services Provided</mat-card-title>

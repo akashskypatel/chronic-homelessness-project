@@ -3,23 +3,27 @@ import { UtilitiesService } from './../../utilities.service';
 import { HoursFormComponent } from './hours-form/hours-form.component';
 import { ServiceList } from './../../../data/service';
 import { Agency, Service, ServiceCategory } from '../../../data/models';
-import { Component, OnInit, ViewChildren, ViewChild, QueryList, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, ViewChild, QueryList, Input, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ServicesFormComponent } from './services-form/services-form.component';
 import { ActivatedRoute } from '@angular/router';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, finalize } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { DataService } from '../../../app/data.service';
+import { ConfirmDialogComponent, DialogData } from 'src/app/reusable/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { environment } from '../../../environments/environment';//TODO: replace with environment.prod in production
 
-const google_api_key = '<REPLACE WITH YOUR API KEY>';
+const google_api_key = environment.google_maps_api_key;
 
 @Component({
   selector: 'app-agency-form',
   templateUrl: './agency-form.component.html',
   styleUrls: ['./agency-form.component.scss']
 })
-export class AgencyFormComponent implements OnInit,AfterViewInit {
+export class AgencyFormComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChildren(ServicesFormComponent) private serviceCards!: QueryList<ServicesFormComponent>;
   @ViewChild(HoursFormComponent) private hfComponent!: HoursFormComponent;
   public address = new FormControl();
@@ -45,20 +49,27 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
     services: new FormArray([]),
     servicesInfo: new FormArray([])
   });
-  public serviceList: Array<ServiceCategory> = ServiceList; //TODO: change to fetch from database instead of static file.
-  public agencyList: Array<Agency> = AgencyList;
+  public serviceList: Array<ServiceCategory> = ServiceList;
   public agency: Agency;
   public id: string;
+  public loading = new Subject<boolean>();
   agencyAddress: string = '';
-  agencyLatitude: string = '';
-  agencyLongitude: string = '';
+  agencyLatitude: number = 0;
+  agencyLongitude: number = 0;
   googleoptions = {
     types: ['address'],
     componentRestrictions: { country: 'US' }
   } as unknown as Options
   apiLoaded: Observable<boolean> = of(false);
+  dialogData: DialogData;
 
-  constructor(private fb: FormBuilder, private utils: UtilitiesService, private route: ActivatedRoute, private httpClient: HttpClient) {
+  constructor(private fb: FormBuilder,
+    private utils: UtilitiesService,
+    private route: ActivatedRoute,
+    private httpClient: HttpClient,
+    private service: DataService,
+    public dialog: MatDialog,
+    private readonly changeDetectorRef: ChangeDetectorRef) {
     this.addServiceCheckboxes();
     this.addServiceForms();
     // check if id is present in query params to determine
@@ -68,20 +79,116 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
       this.id = params['id'];
       if (this.id) {
         this.isNew = false;
-        this.agency = this.agencyList.filter(item => this.id.includes(item.id))[0]; //TODO: change to fetch by id from the database instead of static file
+        this.fetchData();
       }
     });
     // generate a new id if this is an add new form
     if (this.isNew) {
       this.formId = utils.generateUUID();
     } else {
-    // otherwise set id to query param id
+      // otherwise set id to query param id
       this.formId = this.id;
-      this.parseData(this.agency);
     }
   }
 
+  /**
+   * Refresh table data source by getting agency data by id from db
+   */
+  fetchData() {
+    this.loading.next(true);
+    this.service.getAgencyById(this.id).subscribe(data => {
+      this.agency = data;
+      this.parseData(this.agency);
+    })
+  }
+
+  /**
+ * Submit form data
+ */
+  saveData() {
+    var serviceForms = this.parentForm.value['servicesInfo'].filter((item: { [x: string]: boolean; }) => item['enabled'] === true)
+    this.parentForm.value['servicesInfo'] = serviceForms;
+    this.parentForm.value['services'] = serviceForms.map((item: { [x: string]: any; }) => item['service']);
+    let data: Agency = this.parentForm.value;
+    data['geocode'] = { lat: this.agencyLatitude, lng: this.agencyLongitude };
+    if (this.isNew) {
+      data.dateCreated = new Date();
+      data.dateUpdated = new Date();
+      return this.service.addAgency(data);
+    } else {
+      data.dateUpdated = new Date();
+      return this.service.updateAgency(data);
+    }
+  }
+  /**
+   * Validate form data to make sure all required fields are populated
+   * @param formData
+   */
+  validateForm() {
+    this.dialogData = {
+      header: "",
+      success: this.parentForm.valid,
+      messages: [],
+      confirm: "Okay"
+    }
+    if (!this.dialogData.success) {
+      this.getErrors();
+      this.dialogData.header = "There are errors in the form. Please correct and try again";
+      this.openDialog(this.dialogData);
+    } else {
+      this.saveData()
+        .pipe(catchError(err => {
+          if (err.status) {
+            console.log(err);
+            this.dialogData.header = err.error.error;
+            this.dialogData.messages.push(err.message);
+            this.dialogData.success = false;
+            this.openDialog(this.dialogData);
+          }
+          return of(this.onError(err))
+        }))
+        .subscribe(res => {
+          this.dialogData.header = "Agency submitted successfully";
+          this.dialogData.messages = [];
+          this.dialogData.messages.push('Succcess');
+          this.openDialog(this.dialogData);
+        });
+    }
+  }
+  /**
+   * Open dialog to show success or failure message
+   * @param data
+   */
+  openDialog(data: DialogData) {
+    this.dialog.open(ConfirmDialogComponent, { data });
+  }
+
+  /**
+   * Get all error messages for current form fields
+   */
+  getErrors() {
+    this.dialogData.messages = [];
+    Object.keys(this.parentForm.controls).forEach((key) => {
+      const controlErrors: any = this.parentForm.get(key)?.errors;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach((keyError) => {
+          this.dialogData.messages.push(
+            'Field name: ' +
+            key +
+            ', Error Reason: ' +
+            keyError
+          );
+        });
+      }
+    });
+  }
+  /**
+   * Log error in console
+   * @param err
+   * @returns
+   */
   onError(err: any) {
+    console.log(err);
     return false;
   }
 
@@ -92,15 +199,22 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
   ngAfterViewInit() {
 
   }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
+  }
   /**
    * Lazy load google maps API
    */
   loadGoogleMapsApi() {
     this.apiLoaded = this.httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=${google_api_key}&libraries=places&language=en`, 'callback')
-        .pipe(
-          map(() => true),
-          catchError((err) => of(this.onError(err))),
-        );
+      .pipe(
+        map(data => {
+          console.log(data);
+          return true
+        }),
+        catchError((err) => of(this.onError(err)))
+    );
   }
   /**
    * Set address values when user select autocompleted address
@@ -266,17 +380,7 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
       })
     })
   }
-  /**
-   * Submit form data
-   */
-  saveData(event: any) {
-    var serviceForms = this.parentForm.value['servicesInfo'].filter((item: { [x: string]: boolean; }) => item['enabled'] === true)
-    this.parentForm.value['servicesInfo'] = serviceForms;
-    this.parentForm.value['services'] = serviceForms.map((item: { [x: string]: any; }) => item['service']);
-    let data = this.parentForm.value;
-    data['geocode'] =  { lat: this.agencyLatitude, lng: this.agencyLongitude };
-    console.log(this.parentForm.value);
-  }
+
   /**
    * Populate the form with given agency data for editting mode
    * @param data agency data
@@ -319,6 +423,8 @@ export class AgencyFormComponent implements OnInit,AfterViewInit {
             saturday: item.hours.saturday,
           }
         })
+        this.agencyLatitude = this.agency.geocode?.lat!;
+        this.agencyLongitude = this.agency.geocode?.lng!;
         this.getServiceCheckbox(item.serviceId).patchValue(item.enabled);
       })
     }

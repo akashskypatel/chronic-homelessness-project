@@ -1,3 +1,4 @@
+import { ReusableModule } from './../reusable/reusable.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -32,6 +33,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     GooglePlaceModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    ReusableModule,
     GeoapifyGeocoderAutocompleteModule.withConfig('API_KEY')
   ],
   providers: [

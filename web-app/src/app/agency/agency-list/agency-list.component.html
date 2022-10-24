@@ -1,19 +1,33 @@
 <div class="content">
   <h1 class="page-header">Agency List</h1>
   <mat-divider></mat-divider>
-<!--
-  <button type="button" class="form-button" mat-raised-button class="form-button" color="primary" routerLink="/agency/add">
-    <mat-icon class="material-symbols-outlined icon-text-button">add</mat-icon>
-    <span>Add Agency</span>
-  </button>
--->
   <br>
-  <mat-form-field class="full-width" appearance="fill">
-    <mat-label>Search Agencies</mat-label>
-    <input matInput type="text" [formControl]="searchField"><!-- value="Salvation Army"-->
-  </mat-form-field>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-list" matSort (matSortChange)="announceSortChange($event)">
+<div class="list-toolbar">
+  <span class="justify-left">
+    <!--TEST element only-->
+    <button *ngIf="!environment.production" type="button" class="form-button" mat-raised-button class="form-button" color="primary" (click)="uploadTestData()">
+      <mat-icon class="material-symbols-outlined icon-text-button">add</mat-icon>
+      <span>Add Test Data</span>
+    </button>
+  </span>
+  <span class="justify-center">
+    <mat-form-field class="search-bar" appearance="fill">
+      <input matInput type="search" [formControl]="searchField" placeholder="Search Agencies" class="search-input"><!-- value="Salvation Army"-->
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </span>
+  <span class="justify-right">
+  <button type="button" class="form-button" mat-raised-button class="form-button" color="primary" (click)="fetchData()">
+    <mat-icon class="material-symbols-outlined icon-text-button">refresh</mat-icon>
+    <span>Refresh</span>
+  </button>
+  </span>
+</div>
+  <div class="spinner-container" *ngIf="loading | async">
+    <mat-spinner></mat-spinner>
+  </div>
 
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-list" matSort (matSortChange)="announceSortChange($event)">
     <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
@@ -54,10 +68,10 @@
         <button type="button" mat-raised-button class="action-button" color="primary" [routerLink]="['/agency/',element.id,'edit']">
           <mat-icon class="material-symbols-outlined icon-text-button">edit</mat-icon>
         </button>
-        <button type="button" mat-raised-button class="action-button" color="primary">
+        <button type="button" mat-raised-button class="action-button" color="primary" (click)="sendEmail(element.id)">
           <mat-icon class="material-symbols-outlined icon-text-button">mail</mat-icon>
         </button>
-        <button type="button" mat-raised-button class="action-button" color="primary">
+        <button type="button" mat-raised-button class="action-button" color="primary" (click)="deleteAgency(element.id, element.name)">
           <mat-icon class="material-symbols-outlined icon-text-button">delete</mat-icon>
         </button>
       </td>
