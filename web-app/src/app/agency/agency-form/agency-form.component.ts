@@ -380,7 +380,6 @@ export class AgencyFormComponent implements OnInit, AfterViewInit, AfterViewChec
       })
     })
   }
-
   /**
    * Populate the form with given agency data for editting mode
    * @param data agency data

@@ -21,5 +21,4 @@ export class NavbarsComponent implements AfterViewInit {
   openedChange(val: any) {
 
   }
-
 }
