@@ -11,6 +11,7 @@ import { DataService } from '../../../app/data.service';
 import { finalize, Observable, Subject } from 'rxjs';
 import { ConfirmDialogComponent, DialogData } from '../../../app/reusable/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ScheduleFormComponent, ScheduleDialogData } from '../schedule-form/schedule-form.component';
 
 @Component({
   selector: 'app-agency-list',
@@ -112,6 +113,21 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
         this.service.deleteAgency(id).subscribe(() => {
           this.fetchData();
         })
+      }
+    })
+  }
+
+  editSchedule(id: string, name: string) {
+    let data: ScheduleDialogData = {
+      agency: name,
+      agency_id: id,
+      expression: '0 0 1/1 * *' //TODO: replace with form data from db
+    }
+    const scheduleForm = this.dialog.open(ScheduleFormComponent, { data });
+    scheduleForm.afterClosed().subscribe(result => {
+      if (result) {
+        //TODO: Save Schedule
+        console.log(scheduleForm.componentInstance.cronForm.value);
       }
     })
   }

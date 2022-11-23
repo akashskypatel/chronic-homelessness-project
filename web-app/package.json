@@ -26,6 +26,7 @@
     "@geoapify/geocoder-autocomplete": "^1.4.2",
     "angular-material-rail-drawer": "^1.1.4",
     "moment": "^2.29.4",
+    "ngx-cron-editor": "^0.7.4",
     "ngx-google-places-autocomplete": "^2.0.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
