@@ -1,0 +1,31 @@
+<div class="hours-form" [formGroup]="hoursForm">
+<h2>Hours:</h2>
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label>Sunday</mat-label>
+  <input matInput formControlName="sunday" [required]="hoursRequired"><!--  value="Closed"-->
+</mat-form-field>
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label>Monday</mat-label>
+  <input matInput formControlName="monday" [required]="hoursRequired"><!--  value="8:00AM - 5:00PM"-->
+</mat-form-field>
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label>Tuesday</mat-label>
+  <input matInput formControlName="tuesday" [required]="hoursRequired"><!--  value="8:00AM - 5:00PM"-->
+</mat-form-field>
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label>Wednesday</mat-label>
+  <input matInput formControlName="wednesday" [required]="hoursRequired"><!--  value="8:00AM - 5:00PM"-->
+</mat-form-field>
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label>Thursday</mat-label>
+  <input matInput formControlName="thursday" [required]="hoursRequired"><!--  value="8:00AM - 5:00PM"-->
+</mat-form-field>
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label>Friday</mat-label>
+  <input matInput formControlName="friday" [required]="hoursRequired"><!--  value="8:00AM - 5:00PM"-->
+</mat-form-field>
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label>Saturday</mat-label>
+  <input matInput formControlName="saturday" [required]="hoursRequired"><!--  value="8:00AM - 5:00PM"-->
+</mat-form-field>
+</div>
