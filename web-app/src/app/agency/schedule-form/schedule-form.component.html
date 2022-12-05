@@ -1,0 +1,7 @@
+<mat-dialog-content>
+<cron-editor [formControl]="cronForm" [options]="cronOptions"></cron-editor>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

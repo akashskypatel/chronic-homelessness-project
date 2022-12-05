@@ -15,6 +15,8 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-autocomplete';
 import { AddressAutocompleteComponent } from './agency-form/address-autocomplete/address-autocomplete.component';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { ScheduleFormComponent } from './schedule-form/schedule-form.component';
+import { CronEditorModule } from 'ngx-cron-editor';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     AgencyListComponent,
     ServicesFormComponent,
     HoursFormComponent,
-    AddressAutocompleteComponent
+    AddressAutocompleteComponent,
+    ScheduleFormComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +37,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     HttpClientModule,
     HttpClientJsonpModule,
     ReusableModule,
+    CronEditorModule,
     GeoapifyGeocoderAutocompleteModule.withConfig('API_KEY')
   ],
   providers: [

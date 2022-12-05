@@ -25,6 +25,3 @@ Once both rest-api and web-ui are up and running you can insert some test data b
 In order to use Address Autocomplete function on Agency form sign up for a free tier of [Google maps API](https://developers.google.com/maps) and enter your API key in `src/environment/environment.ts` file. This is an optional step. The form will still work without it but the console will show some errors on Agency form page as google maps api fails to load.
 
 If rest-api project is running on a port other than 8080, make sure you update `src/data/api.ts` with the port its running on
-
-
-
