@@ -1,0 +1,79 @@
+table {
+  min-width: 150px;
+  width: 100%;
+  table-layout: fixed;
+}
+.table-list{
+  margin-top: 10px;
+}
+.action-button{
+  margin-top: 2px;
+  margin-left: 2px;
+}
+
+.content {
+  margin: 10px;
+}
+
+.mat-row:hover .mat-cell {
+  background-color:rgb(240, 240, 240);
+}
+
+.mat-row:nth-child(even){
+  background-color: rgb(245, 245, 245);
+}
+th, td {
+  overflow: hidden;
+  width:auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.align-center {
+  text-align: center;
+}
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+th.mat-sort-header-sorted {
+  color: black;
+}
+/*
+.list-toolbar {
+  display: flex;
+  height:50px;
+  flex-flow: column wrap;
+  align-content: space-between;
+}
+*/
+
+.list-toolbar {
+  height: fit-content;
+}
+
+.list-toolbar>.justify-left,
+.list-toolbar>.justify-center,
+.list-toolbar>.justify-right {
+  display: inline-block;
+  width: 33%;
+}
+
+.list-toolbar>.justify-left {
+  text-align: left;
+  align-items: center;
+}
+.list-toolbar>.justify-center {
+  text-align: center;
+  align-items: center;
+}
+.list-toolbar>.justify-right {
+  text-align: right;
+  align-items: center;
+}
+.search-bar {
+  width: 100%;
+}
+
+.searh-icon {
+  align-self: center;
+}

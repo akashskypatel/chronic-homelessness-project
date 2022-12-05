@@ -1,0 +1,26 @@
+<div *ngIf="serviceForm">
+  <div class="service-form" [formGroup]="serviceForm">
+    <mat-card class="form-card" *ngIf='showCard'>
+      <mat-card-title>{{ serviceTitle }}</mat-card-title>
+      <mat-slide-toggle formControlName="enabled" class="invisible"></mat-slide-toggle>
+      <mat-form-field class="full-width invisible" appearance="fill">
+        <mat-label>Service Id</mat-label>
+        <input matInput formControlName="serviceId" [value]="cardId" [readonly]='true'>
+      </mat-form-field>
+      <mat-form-field class="full-width invisible" appearance="fill">
+        <mat-label>Service</mat-label>
+        <input matInput formControlName="service" [value]="serviceTitle" [readonly]='true'>
+      </mat-form-field>
+      <mat-slide-toggle (click)="toggleHours($event)" formControlName="differentHours">Service has specific hours that
+        are different than general agency hours</mat-slide-toggle>
+      <div *ngIf='!this.differentHoursValue'>
+        <br>
+      </div>
+      <app-hours-form *ngIf='this.differentHoursValue' [hoursForm]="hours" [hoursRequired]="this.differentHoursValue"></app-hours-form>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" formControlName="description" [required]="showCard"></textarea>
+      </mat-form-field>
+    </mat-card>
+  </div>
+</div>
